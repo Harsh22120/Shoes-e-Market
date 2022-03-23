@@ -24,7 +24,7 @@ const Navbar = () => {
                                 <NavLink className="nav-link active" aria-current="page" to="/">Home</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/product">Product</NavLink>
+                                <NavLink className="nav-link" to="/products">Product</NavLink>
                             </li>
 
                             <li className="nav-item">
@@ -43,7 +43,8 @@ const Navbar = () => {
                                 <i className="fa fa-user-plus me-1"></i> Register</NavLink>
 
                             <NavLink to='/cart' className='btn btn-outline-dark ms-2'>
-                                <i className="fa fa-cart-plus me-1"></i> Cart ({state.length})</NavLink>
+                                <i className="fa fa-cart-plus me-1"></i> Cart ({0})
+                            </NavLink>
 
                         </div>
                     </div>

@@ -1,87 +1,82 @@
-import React, {useState, useEffect} from 'react';
-import { useDispatch } from 'react-redux';
-import { addCart }from '../redux/action'
-import { useParams } from 'react-router';
-import { NavLink } from 'react-router-dom';
-import Skeleton from 'react-loading-skeleton';
+import React, { useState, useEffect } from "react";
+import {NavLink} from 'react-router-dom';
+import Axios from "axios";
+const Product = () => {
+  // const id = useParams();
+  const url = "http://localhost:4000/api/products";
 
-const Products = () => {
-    const {id} = useParams();
-    const [products, setProducts] = useState([]);
-    const[loading, setloading] = useState(false);
-    const dispatch = useDispatch();
-    const addProduct = (products)=> {
-        dispatch(addCart(products));
-    }
-    useEffect(() => {
-        const getProducts = async () => {
-            setloading(true);
-            const response = await fetch('https://fakestoreapi.com/products/${id}');
-            setProducts(await response.json());
-            setloading(false);
-        }
-        getProducts();
+  const [products, setproducts] = useState({
+    loading: false,
+    data: null,
+    error: false,
+  });
 
-    },[]);
+  useEffect(() => {
+    setproducts({
+      loading: false,
+      data: null,
+      error: false,
+    });
+    Axios.get(url)
+      .then((response) => {
+        setproducts({
+          loading: false,
+          data: response.data,
+          error: false,
+        });
+      })
+      .catch(() => {
+        setproducts({
+          loading: false,
+          data: null,
+          error: false,
+        });
+      });
+  }, [url]);
 
-    const Loading = () =>{
-        return(
-            <>
-                <div className='col-md-6'>
-                    <Skeleton height={400} />
-                </div>
-                <div className='col-md-6' style={{lineHeight:2}}>
-                    <Skeleton height={50} width={300}/>
-                    <Skeleton height={75} />
-                    <Skeleton height={25} width={150}/>
-                    <Skeleton height={50} />
-                    <Skeleton height={150} />
-                    <Skeleton height={50} width={100} />
-                    <Skeleton height={75} width={100} style={{marginLeft:6}}/>
-                </div>
-            </>
-        )
-    }
-    const ShowProducts = () => {
-        return(
-            <>
-                <div className="col-md-6">
-                    <img src={products.image} alt={products.title}
-                    height="400px" width="400px" />
-                </div>
-                <div className='col-md-6'>
-                    <h4 className='text-uppercase text-black-50'>
-                        {products.category}
-                    </h4>
-                    <h1 className='display-5'>{products.tital}</h1>
-                    <p className='lead fw-bolder'>
-                        Rating {products.rating && products.rating.rate}
-                        <i className='fa fa-star'></i>
-                    </p>
-                    <h3 className='dispplay-6 fw-blod my-4'>
-                        $ {products.price}
-                    </h3>
-                    <p className='lead'>{products.description}</p>
-                    <button className='btn btn-outline-dark px-4 py-2 onClick={()=>addProduct(product)}'>
-                        Add to cart
-                    </button>
-                    <NavLink className='btn btn-dark'>
-                        Go to cart
-                    </NavLink>
-                </div>
-            </>
-        );
-    }
+  let content = null;
+  if (products.error) {
+    content = <p>There was an error pls Refresh and try again letter...</p>;
+  }
+
   return (
     <div>
-        <div className='container py-5'>
-            <div className='row py-4'>
-                {loading? <loading /> : <ShowProducts />}
-             </div>
+        <div className='container my-5 py-5'>
+                <div className='row'>
+                    <div className='col-12 mb-5'>
+                        <h1 className='display-6 fw-bolder text-center'>Latest Product</h1>
+                        <hr />
+                    </div>
+                </div>
         </div>
-        
+            
+        <div className="products-container">
+          {products?.data &&
+            products.data.map((content, key) => {
+              // console.log("products printed", content);
+              return (
+                <>
+                  <div className=" card border mb-4 rounded overflow-hidden shedow ">
+                    <img src={content.image} class="card-img-top" alt="" height="250px" />
+                    <br />
+                    {content.name} 
+                    <br />
+                     $ : {content.price}
+                    <br />
+                     {content.category}
+                    <br />
+                    <br />
+                    <div >
+                    <NavLink to= '/product' class="btn btn-outline-dark">Buy Now</NavLink> 
+                                    
+                    </div>
+                  </div>
+                </>
+              );
+            })}
+        </div>
     </div>
   );
-}
+};
 
-export default Products;
+export default Product;

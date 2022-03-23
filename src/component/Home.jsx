@@ -1,10 +1,10 @@
 import React from 'react'
-import Product from './Product';
+import Product from './Products';
 
 const Home = () => {
     return (
         <div className='hero'>
-            <div class="card bg-dark text-black border-0">
+            <div class="card bg-white text-black ">
                 <img src="/assets/3.jpg" class="card-img" alt="Background" 
                 height="550px" />
                 <div class="card-img-overlay d-flex flex-column justify-content-center">
