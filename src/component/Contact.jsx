@@ -31,7 +31,7 @@ const Contact = () => {
                 <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
               </div>
-              <button type="submit" class="btn btn-outline-primary">Send Message</button>
+              <button type="submit" class="btn btn-outline-dark">Send Message</button>
             </form>
           </div>
         </div>

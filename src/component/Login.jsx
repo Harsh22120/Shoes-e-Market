@@ -1,28 +1,32 @@
-import React from 'react'
-
+import React from 'react';
+import {NavLink} from 'react-router-dom';
 const Login = () => {
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-6">
-          <form>
+    <div>
+      <div className="container mb-5">
+        <div className="row">
+          <div className="col-12 text-center py-4 my-4">
+            <h1>Login</h1>
+            <hr />
+
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6">
             <form>
+              
               <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
               </div>
               <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" />
-              </div>
-              <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-              </div>
-              <button type="submit" class="btn btn-dark">Submit</button>
+                <label for="exampleFormControlInput1" class="form-label">Password</label>
+                <input type="text" class="form-control" id="exampleForm" placeholder="Enter Your Password" />
+              </div>            
+              <button type="submit" class="btn btn-outline-dark">Login</button>
+              <NavLink to="/register" class="btn btn-outline-dark">Sing Up</NavLink>
             </form>
-          </form>
+          </div>
         </div>
       </div>
     </div>
