@@ -67,8 +67,8 @@ const Product = () => {
                     <br />
                     <br />
                     <div className="" >
-                    <NavLink to= '/cart' class="btn btn-outline-dark">Add to Cart</NavLink> 
-                    <NavLink to= '/product' class="btn btn-outline-dark">View Detail</NavLink>                                 
+                    <NavLink to= '/cart' class="btn btn-outline-dark ">Add to Cart</NavLink> 
+                    <NavLink to= {'/product/${product.id}'} class="btn btn-outline-dark">View Detail</NavLink>                                 
                     </div>
                   </div>
                 </>

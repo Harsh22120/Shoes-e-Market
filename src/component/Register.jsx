@@ -30,11 +30,11 @@ const Register = () => {
               </div>
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Password</label>
-                <input type="text" class="form-control" id="exampleForm" placeholder="Enter Your Password" />
+                <input type="password" class="form-control" id="exampleForm" placeholder="Enter Your Password" />
               </div>
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Config Password</label>
-                <input type="text" class="form-control" id="exampleForm" placeholder="Enter Your ConfigPassword" />
+                <input type="password" class="form-control" id="exampleForm" placeholder="Enter Your ConfigPassword" />
               </div>
 
               

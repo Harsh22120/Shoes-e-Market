@@ -9,13 +9,12 @@ import Login from './component/Login';
 import Register from './component/Register';
 import Cart from './component/Cart';
 import {Switch, Route} from "react-router-dom";
-import ProductDetail from "./component/Product";
 import { useState } from 'react';
 
 function App() {
   const [state, setState] = useState();
-   
-const  ProductDetail = (pid) => {
+   console.log("printstate ===/>",state);
+  const  ProductDetail = (pid) => {
   if(pid){
     setState(pid);
     }

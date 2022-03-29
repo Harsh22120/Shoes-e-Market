@@ -1,22 +1,61 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import {delItem} from '../redux/action/index';
-const Cart = () => { 
-    const state = useSelector((state)=> state.addItem)
-    const dispatch = useDispatch()
-    const handleClose =(item) =>{
-        dispatch(delItem(item))
+import React, {useState, useEffect} from 'react';
+import {NavLink} from 'react-router-dom';
+import Axios from 'axios';
+
+const Cart = () => {
+    const url = "http://localhost:4000/carts";
+
+    const [products, setproducts] = useState({
+      loading: false,
+      data: null,
+      error: false,
+    });
+  
+    useEffect(() => {
+      setproducts({
+        loading: false,
+        data: null,
+        error: false,
+      });
+      Axios.get(url)
+        .then((response) => {
+          setproducts({
+            loading: false,
+            data: response.data,
+            error: false,
+          });
+        })
+        .catch(() => {
+          setproducts({
+            loading: false,
+            data: null,
+            error: false,
+          });
+        });
+    }, [url]);
+  
+    let content = null;
+    if (products.error) {
+      content = <p>There was an error pls Refresh and try again letter...</p>;
     }
-    const cartItems = (cartItem) => {
-        return(
-            <div className='px-4 my-5 bg-light rounder-3 key={cartItem.id}'>
+  
+
+    return (
+    <div>
+        <div className='container my-2 py-0'>
+                <div className='row'>
+                    <div className='col-0 mb-0'>
+                        <h1 className='display-6 fw-bolder text-center'>Your Cart Details</h1>
+                        <hr />
+                    </div>
+                </div>
+        </div>
+        <div className='px-4 my-5 bg-light rounder-3 key={cartItem.id}'>
                 <div className='container py-4'>
-                     <button onClick={()=>handleClose(cartItem)}className='btn-close-float-end'aria-label='Close'></button>
+                     {/* <button onClick="submit"className='btn-close-float-end'aria-label='Close'></button> */}
                     <div className="row justify-content-center">
-                            <div className='col-md-4'>
-                                <img src="./assets/about.jpg"  height='200px' width='180px' />
+                            <div className='col-md-8'>
+                                <img src="./assets/aboutus.jpg"  height='200px' width='180px' />
                             </div>
                         <div className="col-md-4">
                             <h3>
@@ -27,23 +66,12 @@ const Cart = () => {
                     </div>
                 </div>
             </div>
-        );
-    } 
-    const button = () =>{
-        return(
-        <div className='container'>
+            <div className='container'>
             <div className='row'>
                 <NavLink to='/checkout' className='btn btn-outline-primary mb-5 w-25'>Proceed to Checkout</NavLink>
             </div>
         </div>
-        );
-    }
-    return (
-    <>
-        {/* {state.length === 0 && emptyCart()} */}
-        {state.length !== 0 && state.map(cartItems)}
-        {state.length !== 0 && button()}
-    </>
+    </div>
   )
 }
 

@@ -21,7 +21,7 @@ const Login = () => {
               </div>
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Password</label>
-                <input type="text" class="form-control" id="exampleForm" placeholder="Enter Your Password" />
+                <input type="password" class="form-control" id="exampleForm" placeholder="Enter Your Password" />
               </div>            
               <button type="submit" class="btn btn-outline-dark">Login</button>
               <NavLink to="/register" class="btn btn-outline-dark">Sing Up</NavLink>
