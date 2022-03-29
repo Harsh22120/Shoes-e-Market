@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {NavLink} from 'react-router-dom';
+import ProductDetail from "../App"
 import Axios from "axios";
 const Product = () => {
   // const id = useParams();
@@ -66,9 +67,11 @@ const Product = () => {
                      {content.category}
                     <br />
                     <br />
-                    <div className="" >
+                    <div className=""  >
                     <NavLink to= '/cart' class="btn btn-outline-dark ">Add to Cart</NavLink> 
-                    <NavLink to= {'/product/${product.id}'} class="btn btn-outline-dark">View Detail</NavLink>                                 
+                    &nbsp;
+                    <NavLink to= '/product' class="btn btn-outline-dark ">View Detail</NavLink>
+                    {/* <button onClick={ProductDetail(content)} className="btn btn-outline-dark my-5">View Detail</button> */}
                     </div>
                   </div>
                 </>

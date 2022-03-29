@@ -9,17 +9,23 @@ import Login from './component/Login';
 import Register from './component/Register';
 import Cart from './component/Cart';
 import {Switch, Route} from "react-router-dom";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
-  const [state, setState] = useState();
-   console.log("printstate ===/>",state);
+  let pId;
+  const [product, setproduct] = useState(null);
+  //  console.log("printstate ===/>",state);
   const  ProductDetail = (pid) => {
   if(pid){
-    setState(pid);
+    pId = pid;
+    console.log("pid", pid);
     }
   };
-return (
+  useEffect(()=>{
+    console.log("product 123567", product);
+  },[product]);
+
+  return (
    <>
      <Navbar />
      <Switch>
@@ -29,18 +35,22 @@ return (
        <Route exact path='/login' component={Login} />
        <Route exact path='/register' component={Register} />
        <Route exact path='/cart' component={Cart} />
-        <Route exact path='/products' component={Products} />
-
-       {/* <Route exact path='/product' component={Product} /> 
         <Route exact path='/products'>
+          <Products
+          ProductDetail={ProductDetail}
+          setproduct={setproduct} />
+          </Route> 
+          
+     {/* <Route exact path='/product' component={Product} /> 
+         <Route exact path='/products'>
          <Products Product = {Products} />
-       </Route>
+         </Route>
       */}
       
        <Route exact path='/product'>
-          <Product pid={state} 
+          <Product pid={product} 
           contentSetter = { ProductDetail } 
-          product={state} />          
+          product={product} />          
        </Route>
    
      </Switch>

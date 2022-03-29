@@ -39,7 +39,6 @@ const Cart = () => {
       content = <p>There was an error pls Refresh and try again letter...</p>;
     }
   
-
     return (
     <div>
         <div className='container my-2 py-0'>
