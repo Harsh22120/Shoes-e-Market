@@ -1,40 +1,42 @@
 import React,{useState, useEffect} from 'react'
 import Axios from 'axios';
-const Product = ({pid}) => {
-  const url = `http://localhost:4000/api/product/${pid}`;
-  console.log("printed pid",pid);
+// import { useParams } from 'react-router-dom';
+
+const Product = ({productDetail}) => {
+   const url = `http://localhost:4000/product/${productDetail}`;
+  //  console.log("print pid ====>>>>>>>>", productDetail);
   
-  const [product, setproduct] = useState({
+  const [products, setproducts] = useState({
     loading: false,
     data: null,
     error: false,
   });
 // console.log("printsetstate",setproduct);
   useEffect(() => {
-    setproduct({
+    setproducts({
       loading: false,
       data: null,
       error: false,
     });
     Axios.get(url)
       .then((response) => {
-        console.log("printdata====> ", response);
-        setproduct({
+        // console.log("printdata====> ", response);
+        setproducts({
           loading: false,
           data: response.data,
           error: false,
         });
       })
       .catch(() => {
-        setproduct({
+        setproducts({
           loading: false,
           data: null,
           error: false,
         });
       });
-  }, ["url"]);
+  }, [url]);
 
-//   let content = null;
+// let { productDetail } = useParams();
 //   if (product.error) {
 //     // content = <p>There was an error pls Refresh and try again letter...</p>;
 //   }
@@ -50,20 +52,20 @@ const Product = ({pid}) => {
         </div>
             
         <div className="product-container">
-          {product?.data &&
-            product.data.map((content, key) => {
-               console.log("product printed", product);
+          {products?.data &&
+            products.data.map((products, key) => {
+               console.log("product printed", products);
               return (
                 <>
                   <div className="row">
                     <div className="col-md-6 d-flex justify-content-center">
-                      <img src={content.img} alt={content.title} height="400px" weidth="400px" />
+                      <img src={products.image} alt={products?.name} height="400px" weidth="400px" />
                     </div>
                     <div className="col-md-6 d-flex flex-column justify-content-center">
-                      <h1 className="display-5 fw-bold">{content.tital}</h1>
+                      <h2 className="display-5 fw-bold">{products.name}</h2 >
                       <hr />
-                      <h2 className="my-4">${content.price}</h2>
-                      <p className="lead">{content.desc}</p>
+                      <h3 className="my-4">${products.price}</h3>
+                      <p className="lead">{products.description}</p>
                       <button className="btn btn-outline-dark my-5">Add to Cart</button>
                     </div>
                   </div>

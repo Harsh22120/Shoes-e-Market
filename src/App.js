@@ -8,22 +8,26 @@ import Products from './component/Products';
 import Login from './component/Login';
 import Register from './component/Register';
 import Cart from './component/Cart';
+import Chackout from './component/Chackout';
 import {Switch, Route} from "react-router-dom";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 function App() {
-  let pId;
-  const [product, setproduct] = useState(null);
+  let content;
+  const [pid, setpid] = useState(null);
   //  console.log("printstate ===/>",state);
   const  ProductDetail = (pid) => {
   if(pid){
-    pId = pid;
-    console.log("pid", pid);
+    content = pid;
+    // console.log("first PID App.js", pid);
+    setpid(pid);
+
     }
   };
-  useEffect(()=>{
-    console.log("product 123567", product);
-  },[product]);
+
+  // useEffect(()=>{
+  //   
+  // },[product]);
 
   return (
    <>
@@ -35,23 +39,25 @@ function App() {
        <Route exact path='/login' component={Login} />
        <Route exact path='/register' component={Register} />
        <Route exact path='/cart' component={Cart} />
+       <Route exact path='/chackout' component={Chackout} />
+       
         <Route exact path='/products'>
           <Products
-          ProductDetail={ProductDetail}
-          setproduct={setproduct} />
+          ProductDetail={ProductDetail} />
           </Route> 
-          
+
      {/* <Route exact path='/product' component={Product} /> 
          <Route exact path='/products'>
          <Products Product = {Products} />
          </Route>
       */}
-      
+      {/* <Route exact path='/:id' component = { Product} /> */}
+
        <Route exact path='/product'>
-          <Product pid={product} 
-          contentSetter = { ProductDetail } 
-          product={product} />          
+          <Product productDetail={pid} contentSetter = { ProductDetail }   />          
        </Route>
+       
+       {/* console.log("bcjdsvascbjasjcbvbsb pid ====", pid); */}
    
      </Switch>
    </>

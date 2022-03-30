@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {NavLink} from 'react-router-dom';
-import ProductDetail from "../App"
 import Axios from "axios";
-const Product = () => {
+import { Link } from "react-router-dom";
+const Product = ({ProductDetail}) => {
   // const id = useParams();
   const url = "http://localhost:4000/api/products";
 
@@ -35,9 +35,9 @@ const Product = () => {
       });
   }, [url]);
 
-  let content = null;
+  // let content = null;
   if (products.error) {
-    content = <p>There was an error pls Refresh and try again letter...</p>;
+    // content = <p>There was an error pls Refresh and try again letter...</p>;
   }
 
   return (
@@ -70,8 +70,9 @@ const Product = () => {
                     <div className=""  >
                     <NavLink to= '/cart' class="btn btn-outline-dark ">Add to Cart</NavLink> 
                     &nbsp;
-                    <NavLink to= '/product' class="btn btn-outline-dark ">View Detail</NavLink>
-                    {/* <button onClick={ProductDetail(content)} className="btn btn-outline-dark my-5">View Detail</button> */}
+                    <Link to= '/product' class="btn btn-outline-dark" onClick={() => {ProductDetail(content.id)}}>View Detail</Link>
+                    {/* <button onClick={'/product'} className="btn btn-outline dark my-5">View Detail</button> */}
+                    {/* <button onClick={'ProductDetail(content)'} to="/product" className="btn btn-outline-dark my-5">View Detail</button> */}
                     </div>
                   </div>
                 </>

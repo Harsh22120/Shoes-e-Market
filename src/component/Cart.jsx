@@ -41,14 +41,10 @@ const Cart = () => {
   
     return (
     <div>
-        <div className='container my-2 py-0'>
-                <div className='row'>
-                    <div className='col-0 mb-0'>
-                        <h1 className='display-6 fw-bolder text-center'>Your Cart Details</h1>
-                        <hr />
-                    </div>
-                </div>
+        <div className="bg-secondary border-top p-4 text-white mb-3">
+          <h1 className="display-6">Shopping Cart</h1>
         </div>
+        
         <div className='px-4 my-5 bg-light rounder-3 key={cartItem.id}'>
                 <div className='container py-4'>
                      {/* <button onClick="submit"className='btn-close-float-end'aria-label='Close'></button> */}
@@ -67,7 +63,7 @@ const Cart = () => {
             </div>
             <div className='container'>
             <div className='row'>
-                <NavLink to='/checkout' className='btn btn-outline-primary mb-5 w-25'>Proceed to Checkout</NavLink>
+                <NavLink to='/chackout' className='btn btn-outline-primary mb-5 w-25'>Proceed to Checkout</NavLink>
             </div>
         </div>
     </div>
