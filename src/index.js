@@ -8,12 +8,14 @@ import '../node_modules/font-awesome/css/font-awesome.min.css';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import store from "./redux/store";
+import Footer from "./component/Footer"
 
 ReactDOM.render(
   <BrowserRouter>
   
   <Provider store = {store}>
     <App />  
+    <Footer />
   </Provider>
 
   </BrowserRouter>,

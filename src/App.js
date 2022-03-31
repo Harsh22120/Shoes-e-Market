@@ -8,26 +8,20 @@ import Products from './component/Products';
 import Login from './component/Login';
 import Register from './component/Register';
 import Cart from './component/Cart';
-import Chackout from './component/Chackout';
+import Checkout from './component/Checkout';
 import {Switch, Route} from "react-router-dom";
 import { useState } from 'react';
 
 function App() {
   let content;
   const [pid, setpid] = useState(null);
-  //  console.log("printstate ===/>",state);
   const  ProductDetail = (pid) => {
   if(pid){
     content = pid;
-    // console.log("first PID App.js", pid);
     setpid(pid);
 
     }
   };
-
-  // useEffect(()=>{
-  //   
-  // },[product]);
 
   return (
    <>
@@ -39,7 +33,7 @@ function App() {
        <Route exact path='/login' component={Login} />
        <Route exact path='/register' component={Register} />
        <Route exact path='/cart' component={Cart} />
-       <Route exact path='/chackout' component={Chackout} />
+       <Route exact path='/checkout' component={Checkout} />
        
         <Route exact path='/products'>
           <Products
@@ -57,8 +51,6 @@ function App() {
           <Product productDetail={pid} contentSetter = { ProductDetail }   />          
        </Route>
        
-       {/* console.log("bcjdsvascbjasjcbvbsb pid ====", pid); */}
-   
      </Switch>
    </>
   );

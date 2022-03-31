@@ -1,73 +1,150 @@
-import React, {useState, useEffect} from 'react';
-import {NavLink} from 'react-router-dom';
-import Axios from 'axios';
+import React, { Component, lazy } from "react";
+import { Link } from "react-router-dom";
+import { ReactComponent as IconHeartFill } from "bootstrap-icons/icons/heart-fill.svg";
+import { ReactComponent as IconTrash } from "bootstrap-icons/icons/trash.svg";
+import { ReactComponent as IconChevronRight } from "bootstrap-icons/icons/chevron-right.svg";
+import { ReactComponent as IconChevronLeft } from "bootstrap-icons/icons/chevron-left.svg";
+import { ReactComponent as IconTruck } from "bootstrap-icons/icons/truck.svg";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+// const CouponApplyForm = lazy(() =>
+//   import("../../components/others/CouponApplyForm")
+// );
 
-const Cart = () => {
-    const url = "http://localhost:4000/carts";
-
-    const [products, setproducts] = useState({
-      loading: false,
-      data: null,
-      error: false,
-    });
-  
-    useEffect(() => {
-      setproducts({
-        loading: false,
-        data: null,
-        error: false,
-      });
-      Axios.get(url)
-        .then((response) => {
-          setproducts({
-            loading: false,
-            data: response.data,
-            error: false,
-          });
-        })
-        .catch(() => {
-          setproducts({
-            loading: false,
-            data: null,
-            error: false,
-          });
-        });
-    }, [url]);
-  
-    let content = null;
-    if (products.error) {
-      content = <p>There was an error pls Refresh and try again letter...</p>;
-    }
-  
+class CartView extends Component {
+  constructor(props) {
+    super();
+    this.state = {};
+  }
+  onSubmitApplyCouponCode = async (values) => {
+    alert(JSON.stringify(values));
+  };
+  render() {
     return (
-    <div>
+      <React.Fragment>
         <div className="bg-secondary border-top p-4 text-white mb-3">
           <h1 className="display-6">Shopping Cart</h1>
         </div>
-        
-        <div className='px-4 my-5 bg-light rounder-3 key={cartItem.id}'>
-                <div className='container py-4'>
-                     {/* <button onClick="submit"className='btn-close-float-end'aria-label='Close'></button> */}
-                    <div className="row justify-content-center">
-                            <div className='col-md-8'>
-                                <img src="./assets/aboutus.jpg"  height='200px' width='180px' />
+        <div className="container mb-3">
+          <div className="row">
+            <div className="col-md-9">
+              <div className="card">
+                <div className="table-responsive">
+                  <table className="table table-borderless">
+                    <thead className="text-muted">
+                      <tr className="small text-uppercase">
+                        <th scope="col">Product</th>
+                        <th scope="col" width={120}>
+                          Quantity
+                        </th>
+                        <th scope="col" width={150}>
+                          Price
+                        </th>
+                        <th scope="col" className="text-right" width={130}></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                     <tr>
+                        <td>
+                          <div className="row">
+                            <div className="col-3 d-none d-md-block">
+                              <img src="../assets/msg.jpg" width="80" alt="..."
+                              />
                             </div>
-                        <div className="col-md-4">
-                            <h3>
-                                Name
-                            </h3>
-                            <p className='lead fw-bold'>$500</p>
-                        </div>
-                    </div>
+                            <div className="col">
+                              <Link
+                                to="/product/detail"
+                                className="text-decoration-none"
+                              >
+                                Another name of some product goes just here
+                              </Link>
+                              <p className="small text-muted">
+                                Size: XL, Color: blue, Brand: XYZ
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="input-group input-group-sm mw-140">
+                            <button className="btn btn-primary text-white" disabled> - </button>
+                            <input type="text" className="form-control" Value="1" />
+                            <button className="btn btn-primary text-white" > + </button>
+                          </div>
+                        </td>
+                        <td>
+                          <var className="price">$237.00</var>
+                          <small className="d-block text-muted">
+                            $79.00 each
+                          </small>
+                        </td>
+                        <td className="text-right">
+                          <button className="btn btn-sm btn-outline-secondary mr-2">
+                            <IconHeartFill className="i-va" />
+                          </button>
+                          &nbsp;
+                          <button className="btn btn-sm btn-outline-danger">
+                            <IconTrash className="i-va" />
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
+                <div className="card-footer">
+                  <Link to="/checkout" className="btn btn-dark float-right">
+                    Make Purchase <IconChevronRight className="i-va" />
+                  </Link>
+                  &nbsp;
+                  <Link to="/products" className="btn btn-dark">
+                    <IconChevronLeft className="i-va" /> Continue shopping
+                  </Link>
+                </div>
+              </div>
+              <div className="alert alert-success mt-3">
+                <p className="m-0">
+                  <IconTruck className="i-va mr-2" /> Free Delivery within 1-2
+                  weeks
+                </p>
+              </div>
             </div>
-            <div className='container'>
-            <div className='row'>
-                <NavLink to='/chackout' className='btn btn-outline-primary mb-5 w-25'>Proceed to Checkout</NavLink>
+            <div className="col-md-3">
+               <div className="card">
+                <div className="card-body">
+                  <dl className="row border-bottom">
+                    <dt className="col-6">Total price:</dt>
+                    <dd className="col-6 text-right">$1,568</dd>
+
+                    <dt className="col-6 text-success">Discount:</dt>
+                    <dd className="col-6 text-success text-right">-$58</dd>
+                    <dt className="col-6 text-success">
+                      Coupon:{" "}
+                      <span className="small text-muted">EXAMPLECODE</span>{" "}
+                    </dt>
+                    <dd className="col-6 text-success text-right">-$68</dd>
+                  </dl>
+                  <dl className="row">
+                    <dt className="col-6">Total:</dt>
+                    <dd className="col-6 text-right  h5">
+                      <strong>$1,350</strong>
+                    </dd>
+                  </dl>
+                  <hr />
+                  <p className="text-center">
+                    <img
+                      src="../assets/payment/payments.webp"
+                      alt="..."
+                      height={26}
+                    />
+                  </p>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-  )
+       
+      </React.Fragment>
+    );
+  }
 }
 
-export default Cart
+export default CartView;
