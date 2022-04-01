@@ -2,7 +2,6 @@ import React from 'react'
 import Product from './Products';
 
 const Home = () => {
-
     return (
         <div className='hero'>
             <div class="card bg-white text-black ">

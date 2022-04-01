@@ -1,30 +1,35 @@
-import React, { Component, lazy } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as IconHeartFill } from "bootstrap-icons/icons/heart-fill.svg";
 import { ReactComponent as IconTrash } from "bootstrap-icons/icons/trash.svg";
 import { ReactComponent as IconChevronRight } from "bootstrap-icons/icons/chevron-right.svg";
 import { ReactComponent as IconChevronLeft } from "bootstrap-icons/icons/chevron-left.svg";
 import { ReactComponent as IconTruck } from "bootstrap-icons/icons/truck.svg";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
-// const CouponApplyForm = lazy(() =>
-//   import("../../components/others/CouponApplyForm")
-// );
 
-class CartView extends Component {
-  constructor(props) {
-    super();
-    this.state = {};
+const Cart = () => {
+
+  // const AddToCart = JSON.parse(localStorage.getItem("Cart")) || [];
+  const [AddToCartLocalStorage, setAddToCartLocalStorage] = useState([]);
+  const [parmid, setparmid] = useState("");
+  
+  useEffect(()=>{
+    setAddToCartLocalStorage(JSON.parse(localStorage.getItem("Cart")) || []);
+  },[parmid]);
+
+  const removelocalstorageproduct = (parmid) =>{
+    const LocalStorageCart = JSON.parse(localStorage.getItem("Cart")) || [];
+    var index = LocalStorageCart.map((x)=>{
+      return x.id;
+    }).indexOf(parmid);
+    LocalStorageCart.splice(index, 1);
+    localStorage.setItem("Cart", JSON.stringify(LocalStorageCart));
+    setparmid(parmid);
   }
-  onSubmitApplyCouponCode = async (values) => {
-    alert(JSON.stringify(values));
-  };
-  render() {
-    return (
-      <React.Fragment>
-        <div className="bg-secondary border-top p-4 text-white mb-3">
+  return (
+    <div>
+       <div className="bg-secondary border-top p-4 text-white mb-3">
           <h1 className="display-6">Shopping Cart</h1>
-        </div>
+       </div>
         <div className="container mb-3">
           <div className="row">
             <div className="col-md-9">
@@ -43,12 +48,14 @@ class CartView extends Component {
                         <th scope="col" className="text-right" width={130}></th>
                       </tr>
                     </thead>
+                      {AddToCartLocalStorage.map((Cart) => {
+                        return(
                     <tbody>
                      <tr>
                         <td>
                           <div className="row">
                             <div className="col-3 d-none d-md-block">
-                              <img src="../assets/msg.jpg" width="80" alt="..."
+                              <img src={Cart.image} width="80" alt="..."
                               />
                             </div>
                             <div className="col">
@@ -56,23 +63,23 @@ class CartView extends Component {
                                 to="/product/detail"
                                 className="text-decoration-none"
                               >
-                                Another name of some product goes just here
+                                {Cart.name}
                               </Link>
                               <p className="small text-muted">
-                                Size: XL, Color: blue, Brand: XYZ
+                               Color: blue, Brand: XYZ
                               </p>
                             </div>
                           </div>
                         </td>
                         <td>
                           <div className="input-group input-group-sm mw-140">
-                            <button className="btn btn-primary text-white" disabled> - </button>
+                            <button className="btn btn-primary text-white" onClick="decreaseCount"> - </button>
                             <input type="text" className="form-control" Value="1" />
-                            <button className="btn btn-primary text-white" > + </button>
+                            <button className="btn btn-primary text-white" onClick="increaseCount" > + </button>
                           </div>
                         </td>
                         <td>
-                          <var className="price">$237.00</var>
+                          <var className="price">${Cart.price}</var>
                           <small className="d-block text-muted">
                             $79.00 each
                           </small>
@@ -82,12 +89,15 @@ class CartView extends Component {
                             <IconHeartFill className="i-va" />
                           </button>
                           &nbsp;
-                          <button className="btn btn-sm btn-outline-danger">
+                          <button className="btn btn-sm btn-outline-danger" onClick={()=> removelocalstorageproduct(Cart.id)}>
                             <IconTrash className="i-va" />
                           </button>
                         </td>
                       </tr>
                     </tbody>
+                    )
+                  })
+                    }
                   </table>
                 </div>
                 <div className="card-footer">
@@ -142,9 +152,8 @@ class CartView extends Component {
           </div>
         </div>
        
-      </React.Fragment>
-    );
-  }
+    </div>
+  )
 }
 
-export default CartView;
+export default Cart

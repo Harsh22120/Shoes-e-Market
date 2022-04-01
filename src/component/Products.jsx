@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import {NavLink} from 'react-router-dom';
 import Axios from "axios";
 import { Link } from "react-router-dom";
 const Product = ({ProductDetail}) => {
@@ -12,6 +11,12 @@ const Product = ({ProductDetail}) => {
     error: false,
   });
 
+let Cart = (item) =>{
+  let LocalStorageCart = JSON.parse(localStorage.getItem("Cart")) || [];
+    LocalStorageCart.push(item);
+    localStorage.setItem("Cart", JSON.stringify(LocalStorageCart));
+  
+}
   useEffect(() => {
     setproducts({
       loading: false,
@@ -54,7 +59,9 @@ const Product = ({ProductDetail}) => {
         <div className="products-container">
           {products?.data &&
             products.data.map((content, key) => {
-              // console.log("products printed", content);
+
+              // console.log("addcart", content);
+
               return (
                 <>
                   <div className=" card border mb-4 rounded overflow-hidden shedow ">
@@ -68,11 +75,11 @@ const Product = ({ProductDetail}) => {
                     <br />
                     <br />
                     <div className=""  >
-                    <NavLink to= '/cart' class="btn btn-outline-dark ">Add to Cart</NavLink> 
-                    &nbsp;
-                    <Link to= '/product' class="btn btn-outline-dark" onClick={() => {ProductDetail(content.id)}}>View Detail</Link>
-                    {/* <button onClick={'/product'} className="btn btn-outline dark my-5">View Detail</button> */}
-                    {/* <button onClick={'ProductDetail(content)'} to="/product" className="btn btn-outline-dark my-5">View Detail</button> */}
+
+                      <Link to= '/cart' class="btn btn-outline-dark" onClick={() => {Cart(content)}} >Add to Cart</Link> 
+                      &nbsp;
+                      <Link to= '/product' class="btn btn-outline-dark" onClick={() => {ProductDetail(content.id)}}>View Detail</Link>
+                      
                     </div>
                   </div>
                 </>
