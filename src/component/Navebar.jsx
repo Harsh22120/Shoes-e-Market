@@ -9,9 +9,10 @@ const Navbar = () => {
                 <div className="container">
                     <NavLink className="navbar-brand" to="/">SHOES MARKET</NavLink>
                     <button className="navbar-toggler"
-                        type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarTogglerDemo03"
+                        aria-controls="navbarTogglerDemo03"
                         aria-expanded="false"
                         aria-label="Toggle navigation">
 

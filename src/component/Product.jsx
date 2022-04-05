@@ -3,8 +3,8 @@ import Axios from "axios";
 // import { useParams } from 'react-router-dom';
 
 const Product = ({ productDetail }) => {
-  // const url = `http://localhost:4000/product/${productDetail}`;
-  const url = `https://444c-42-105-167-144.ngrok.io`;
+  const url = `http://localhost:4000/product/${productDetail}`;
+  // const url = `https://444c-42-105-167-144.ngrok.io`;
 
   //  console.log("print pid ====>>>>>>>>", productDetail);
 

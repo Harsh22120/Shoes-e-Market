@@ -3,8 +3,8 @@ import Axios from "axios";
 import { Link } from "react-router-dom";
 const Product = ({ ProductDetail }) => {
   // const id = useParams();
-  // const url = "http://localhost:4000/api/products";
-  const url = "https://444c-42-105-167-144.ngrok.io/api/products";
+  const url = "http://localhost:4000/api/products";
+  // const url = "https://444c-42-105-167-144.ngrok.io/api/products";
 
   const [products, setproducts] = useState({
     loading: false,
