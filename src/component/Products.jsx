@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 const Product = ({ProductDetail}) => {
   // const id = useParams();
   const url = "http://localhost:4000/api/products";
-
   const [products, setproducts] = useState({
     loading: false,
     data: null,
@@ -14,8 +13,16 @@ const Product = ({ProductDetail}) => {
 let Cart = (item) =>{
   let LocalStorageCart = JSON.parse(localStorage.getItem("Cart")) || [];
     LocalStorageCart.push(item);
+
+    if(LocalStorageCart){
+       setproducts(
+            (Cart) => Cart.id === products.id ? {...LocalStorageCart, qty: LocalStorageCart.qty + 1}:Cart 
+      );
+      }else{
+        setproducts([...products, {...Cart, qty: 1}]);
+    }
+
     localStorage.setItem("Cart", JSON.stringify(LocalStorageCart));
-  
 }
   useEffect(() => {
     setproducts({
@@ -44,6 +51,7 @@ let Cart = (item) =>{
   if (products.error) {
     // content = <p>There was an error pls Refresh and try again letter...</p>;
   }
+let TempcartId = [];
 
   return (
     <div>
@@ -59,8 +67,13 @@ let Cart = (item) =>{
         <div className="products-container">
           {products?.data &&
             products.data.map((content, key) => {
+                  // if(!TempcartId.contains(content.id)){
+                  //   TempcartId.push(content.id);
+                  // }
+                  // else{
+                      
+                  // }
 
-              // console.log("addcart", content);
 
               return (
                 <>
@@ -76,7 +89,7 @@ let Cart = (item) =>{
                     <br />
                     <div className=""  >
 
-                      <Link to= '/cart' class="btn btn-outline-dark" onClick={() => {Cart(content)}} >Add to Cart</Link> 
+                      <Link to={'/cart'} class="btn btn-outline-dark" onClick={() => Cart(content)} >Add to Cart</Link> 
                       &nbsp;
                       <Link to= '/product' class="btn btn-outline-dark" onClick={() => {ProductDetail(content.id)}}>View Detail</Link>
                       

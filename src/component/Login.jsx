@@ -1,32 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import {NavLink} from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+
 const Login = () => {
   const [email,setEmail]=useState("");
   const[password,setPassword]=useState("");
-  const history = useHistory();
-
-useEffect(() => {
-  if(localStorage.getItem('user-info')){
-    history.push("/add")
-  }
-},[])
-
-async function login(){
-  console.log(email, password)
-  let item = {email, password};
-  let result = await fetch("localhost:4000/api/login",{
-    method: 'POST',
-    headers:{
-      "Content Type": "applicaion/json",
-      "Accept": "application/json"
-    },
-    body: JSON.stringify(item)
-  });
-  result = await result.json();
-  localStorage.setItem("user-info",JSON.stringify(result))
-  history.push("/add")
-}
 
 return (
     <div>
@@ -58,7 +35,7 @@ return (
                       onChange={(e)=>setPassword(e.target.value)}  />
               </div>            
               
-              <button onClick={login} class="btn btn-outline-dark">Login</button>
+              <button onClick={""} class="btn btn-outline-dark">Login</button>
               &nbsp;
               <NavLink to="/register" class="btn btn-outline-dark">Sing Up</NavLink>
             

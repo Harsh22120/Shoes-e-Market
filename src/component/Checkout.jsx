@@ -252,8 +252,9 @@ class CheckoutView extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="card-footer border-info">
+                <div className="card-footer border-info row">
                   <button type="button" className="btn btn-block btn-info">
+
                     Pay Now <strong>$162</strong>
                   </button>
                 </div>
