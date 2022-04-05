@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {NavLink} from 'react-router-dom';
 
 const Login = () => {
-  const [email,setEmail]=useState("");
-  const[password,setPassword]=useState("");
-
+    
 return (
     <div>
       <div className="container mb-5">
@@ -24,7 +22,7 @@ return (
                 <input type="email"  class="form-control" 
                     id="exampleFormControlInput1"
                     placeholder="name@example.com" 
-                    onChange={(e)=>setEmail(e.target.value)} />
+                     />
               </div>
 
               <div class="mb-3">
@@ -32,7 +30,7 @@ return (
                 <input type="password" class="form-control" 
                       id="exampleForm"
                       placeholder="Enter Your Password"
-                      onChange={(e)=>setPassword(e.target.value)}  />
+                        />
               </div>            
               
               <button onClick={""} class="btn btn-outline-dark">Login</button>
