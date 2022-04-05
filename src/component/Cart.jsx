@@ -7,25 +7,29 @@ import { ReactComponent as IconChevronLeft } from "bootstrap-icons/icons/chevron
 import { ReactComponent as IconTruck } from "bootstrap-icons/icons/truck.svg";
 
 const Cart = () => {
-
   // const AddToCart = JSON.parse(localStorage.getItem("Cart")) || [];
   const [AddToCartLocalStorage, setAddToCartLocalStorage] = useState([]);
   const [parmid, setparmid] = useState("");
 
+  let cartItem = [];
+  let cartItemId = [];
+
   useEffect(() => {
-    const localStorageData =  JSON.parse(localStorage.getItem("Cart")) || [];
+    const localStorageData = JSON.parse(localStorage.getItem("Cart")) || [];
 
     localStorageData.map((Cart) => {
-      if (!cartItem.indexOf(Cart)) {
+      if (cartItemId.indexOf(Cart.id) < 0) {
+        Cart["qty"] = 1;
+        cartItemId.push(Cart.id);
+        cartItem.push(Cart);
+      } else {
+        const tempIndexOfCurrentCartItem = cartItemId.indexOf(Cart.id);
+        cartItem[tempIndexOfCurrentCartItem].qty += 1;
+        cartItem[tempIndexOfCurrentCartItem].price += Cart.price;
+      }
+    });
 
-        cartItem.push(Cart)
-      }else{
-        console.log("Cart rtck  ", Cart);
-      }     
-    })
-
-    setAddToCartLocalStorage(cartItem)
-
+    setAddToCartLocalStorage(cartItem);
   }, []);
 
   const removelocalstorageproduct = (parmid) => {
@@ -36,10 +40,7 @@ const Cart = () => {
     LocalStorageCart.splice(index, 1);
     localStorage.setItem("Cart", JSON.stringify(LocalStorageCart));
     setparmid(parmid);
-  }
-
-
-  let cartItem = []
+  };
 
   return (
     <div>
@@ -65,57 +66,61 @@ const Cart = () => {
                     </tr>
                   </thead>
 
-                  {
-                    AddToCartLocalStorage.map((Cart) => {
-                      return (
-                        <tbody>
-                          <tr>
-                            <td>
-                              <div className="row">
-                                <div className="col-3 d-none d-md-block">
-                                  <img src={Cart.image} width="80" alt="..."
-                                  />
-                                </div>
-                                <div className="col">
-                                  <Link
-                                    to="/product/detail"
-                                    className="text-decoration-none"
-                                  >
-                                    {Cart.name}
-                                  </Link>
-                                  <p className="small text-muted">
-                                    Color: blue, Brand: XYZ
-                                  </p>
-                                </div>
+                  {AddToCartLocalStorage.map((Cart) => {
+                    return (
+                      <tbody>
+                        <tr>
+                          <td>
+                            <div className="row">
+                              <div className="col-3 d-none d-md-block">
+                                <img src={Cart.image} width="80" alt="..." />
                               </div>
-                            </td>
-                            <td>
-                              <div className="input-group input-group-sm mw-140">
-                                <button className="btn btn-primary text-white" onClick="decreaseCount"> - </button>
-                                <input type="text" className="form-control" Value="1" />
-                                <button className="btn btn-primary text-white" onClick="increaseCount" > + </button>
+                              <div className="col">
+                                <Link to="/product/detail" className="text-decoration-none">
+                                  {Cart.name}
+                                </Link>
+                                <p className="small text-muted">Color: blue, Brand: XYZ</p>
                               </div>
-                            </td>
-                            <td>
-                              <var className="price">${Cart.price}</var>
-                              <small className="d-block text-muted">
-                                $79.00 each
-                              </small>
-                            </td>
-                            <td className="text-right">
-                              <button className="btn btn-sm btn-outline-secondary mr-2">
-                                <IconHeartFill className="i-va" />
+                            </div>
+                          </td>
+                          <td>
+                            <div className="input-group input-group-sm mw-140">
+                              <button
+                                className="btn btn-primary text-white"
+                                onClick="decreaseCount"
+                              >
+                                {" "}
+                                -{" "}
                               </button>
-                              &nbsp;
-                              <button className="btn btn-sm btn-outline-danger" onClick={() => removelocalstorageproduct(Cart.id)}>
-                                <IconTrash className="i-va" />
+                              <input type="text" className="form-control" Value={Cart.qty} />
+                              <button
+                                className="btn btn-primary text-white"
+                                onClick="increaseCount"
+                              >
+                                {" "}
+                                +{" "}
                               </button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      )
-                    })
-                  }
+                            </div>
+                          </td>
+                          <td>
+                            <var className="price">${Cart.price}</var>
+                          </td>
+                          <td className="text-right">
+                            <button className="btn btn-sm btn-outline-secondary mr-2">
+                              <IconHeartFill className="i-va" />
+                            </button>
+                            &nbsp;
+                            <button
+                              className="btn btn-sm btn-outline-danger"
+                              onClick={() => removelocalstorageproduct(Cart.id)}
+                            >
+                              <IconTrash className="i-va" />
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    );
+                  })}
                 </table>
               </div>
               <div className="card-footer">
@@ -130,8 +135,7 @@ const Cart = () => {
             </div>
             <div className="alert alert-success mt-3">
               <p className="m-0">
-                <IconTruck className="i-va mr-2" /> Free Delivery within 1-2
-                weeks
+                <IconTruck className="i-va mr-2" /> Free Delivery within 1-2 weeks
               </p>
             </div>
           </div>
@@ -145,8 +149,7 @@ const Cart = () => {
                   <dt className="col-6 text-success">Discount:</dt>
                   <dd className="col-6 text-success text-right">-$58</dd>
                   <dt className="col-6 text-success">
-                    Coupon:{" "}
-                    <span className="small text-muted">EXAMPLECODE</span>{" "}
+                    Coupon: <span className="small text-muted">EXAMPLECODE</span>{" "}
                   </dt>
                   <dd className="col-6 text-success text-right">-$68</dd>
                 </dl>
@@ -158,20 +161,15 @@ const Cart = () => {
                 </dl>
                 <hr />
                 <p className="text-center">
-                  <img
-                    src="../assets/payment/payments.webp"
-                    alt="..."
-                    height={26}
-                  />
+                  <img src="../assets/payment/payments.webp" alt="..." height={26} />
                 </p>
               </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default Cart
+export default Cart;
