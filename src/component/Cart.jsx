@@ -13,7 +13,7 @@ const Cart = () => {
 
   let cartItem = [];
   let cartItemId = [];
-
+  let carttotal = 0;
   useEffect(() => {
     const localStorageData = JSON.parse(localStorage.getItem("Cart")) || [];
 
@@ -30,7 +30,7 @@ const Cart = () => {
     });
 
     setAddToCartLocalStorage(cartItem);
-  }, []);
+  }, [parmid]);
 
   const removelocalstorageproduct = (parmid) => {
     const LocalStorageCart = JSON.parse(localStorage.getItem("Cart")) || [];
@@ -67,6 +67,8 @@ const Cart = () => {
                   </thead>
 
                   {AddToCartLocalStorage.map((Cart) => {
+                        carttotal = carttotal + Cart.price;
+
                     return (
                       <tbody>
                         <tr>
@@ -88,18 +90,9 @@ const Cart = () => {
                               <button
                                 className="btn btn-primary text-white"
                                 onClick="decreaseCount"
-                              >
-                                {" "}
-                                -{" "}
-                              </button>
+                              > - </button>
                               <input type="text" className="form-control" Value={Cart.qty} />
-                              <button
-                                className="btn btn-primary text-white"
-                                onClick="increaseCount"
-                              >
-                                {" "}
-                                +{" "}
-                              </button>
+                              <button className="btn btn-primary text-white" onClick="increaseCount"> + </button>
                             </div>
                           </td>
                           <td>
@@ -144,19 +137,15 @@ const Cart = () => {
               <div className="card-body">
                 <dl className="row border-bottom">
                   <dt className="col-6">Total price:</dt>
-                  <dd className="col-6 text-right">$1,568</dd>
+                  <dd className="col-6 text-right">${(carttotal)}</dd>
 
-                  <dt className="col-6 text-success">Discount:</dt>
-                  <dd className="col-6 text-success text-right">-$58</dd>
-                  <dt className="col-6 text-success">
-                    Coupon: <span className="small text-muted">EXAMPLECODE</span>{" "}
-                  </dt>
-                  <dd className="col-6 text-success text-right">-$68</dd>
+                  <dt className="col-6 text-success">Discount</dt>
+                  <dd className="col-6 text-success text-right">-$58</dd>                
                 </dl>
                 <dl className="row">
                   <dt className="col-6">Total:</dt>
                   <dd className="col-6 text-right  h5">
-                    <strong>$1,350</strong>
+                    <strong>${(carttotal)}</strong>
                   </dd>
                 </dl>
                 <hr />

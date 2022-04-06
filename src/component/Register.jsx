@@ -8,8 +8,8 @@ const Register = () => {
   const[configpassword, setConfigpassword]=useState("");
 
   // States for checking the errors
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState(false);
+  // const [submitted, setSubmitted] = useState(false);
+  // const [error, setError] = useState(false);
   
 async function register(){
     console.warn(email, password)

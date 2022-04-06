@@ -1,17 +1,18 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { ReactComponent as IconEnvelope } from "bootstrap-icons/icons/envelope.svg";
 import { ReactComponent as IconTruck } from "bootstrap-icons/icons/truck.svg";
 import { ReactComponent as IconReceipt } from "bootstrap-icons/icons/receipt.svg";
 import { ReactComponent as IconCreditCard2Front } from "bootstrap-icons/icons/credit-card-2-front.svg";
 import { ReactComponent as IconCart3 } from "bootstrap-icons/icons/cart3.svg";
+import { Cart } from "react-bootstrap-icons";
 
-class CheckoutView extends Component {
-  constructor(props) {
-    super();
-    this.state = {};
-  }
+const Checkout =()=> {
+  
+  // const [AddToCartLocalStorage, setAddToCartLocalStorage] = useState([]);
 
-  render() {
+    const AddToCartLocalStorageCart = JSON.parse(localStorage.getItem("Cart")) || [];
+    let carttotal = 0;
+  
     return (
       <React.Fragment>
         <div className="bg-secondary border-top p-4 text-white mb-3">
@@ -78,13 +79,17 @@ class CheckoutView extends Component {
                     <div className="col-md-4">
                       <select className="form-select" required>
                         <option value>-- Country --</option>
-                        <option>United States</option>
+                        <option>India</option>
                       </select>
                     </div>
                     <div className="col-md-4">
                       <select className="form-select" required>
                         <option value>-- State --</option>
-                        <option>California</option>
+                        <option>Gujrat</option>
+                        <option>Pune</option>
+                        <option>Mumbai</option>
+                        <option>Delhi</option>
+                        <option>Benglur</option>
                       </select>
                     </div>
                     <div className="col-md-4">
@@ -145,13 +150,17 @@ class CheckoutView extends Component {
                     <div className="col-md-4">
                       <select className="form-select" required>
                         <option value>-- Country --</option>
-                        <option>United States</option>
+                        <option>India</option>
                       </select>
                     </div>
                     <div className="col-md-4">
                       <select className="form-select" required>
                         <option value>-- State --</option>
-                        <option>California</option>
+                        <option>Gujrat</option>
+                        <option>Pune</option>
+                        <option>Mumbai</option>
+                        <option>Delhi</option>
+                        <option>Benglur</option>
                       </select>
                     </div>
                     <div className="col-md-4">
@@ -254,40 +263,32 @@ class CheckoutView extends Component {
                 </div>
                 <div className="card-footer border-info row">
                   <button type="button" className="btn btn-block btn-info">
-
-                    Pay Now <strong>$162</strong>
+                    Pay Now <strong>${carttotal}</strong>
                   </button>
                 </div>
               </div>
             </div>
             <div className="col-md-4">
+
               <div className="card">
                 <div className="card-header">
                   <IconCart3 className="i-va" /> Cart{" "}
-                  <span className="badge bg-secondary float-right">3</span>
+                  <span className="badge bg-secondary float-right">{AddToCartLocalStorageCart?.length}</span>
                 </div>
+              {AddToCartLocalStorageCart.map((Cart)=>{
+                   carttotal = carttotal + Cart.price;
+                return(                
                 <ul className="list-group list-group-flush">
                   <li className="list-group-item d-flex justify-content-between lh-sm">
                     <div>
-                      <h6 className="my-0">Product name</h6>
+                      <h6 className="my-0">{Cart.name}</h6>
                       <small className="text-muted">Brief description</small>
                     </div>
-                    <span className="text-muted">$150</span>
+                    <span className="text-muted">${Cart.price}</span>
                   </li>
-                  <li className="list-group-item d-flex justify-content-between lh-sm">
-                    <div>
-                      <h6 className="my-0">Second product</h6>
-                      <small className="text-muted">Brief description</small>
-                    </div>
-                    <span className="text-muted">$12</span>
-                  </li>
-                  <li className="list-group-item d-flex justify-content-between lh-sm">
-                    <div>
-                      <h6 className="my-0">Third item</h6>
-                      <small className="text-muted">Brief description</small>
-                    </div>
-                    <span className="text-muted">$50</span>
-                  </li>
+                  </ul>
+                  );
+            })}
                   <li className="list-group-item d-flex justify-content-between bg-light">
                     <div className="text-success">
                       <h6 className="my-0">Promo code</h6>
@@ -297,9 +298,10 @@ class CheckoutView extends Component {
                   </li>
                   <li className="list-group-item d-flex justify-content-between">
                     <span>Total (USD)</span>
-                    <strong>$162</strong>
+                    <strong>${(carttotal)}</strong>
                   </li>
-                </ul>
+           
+            
               </div>
             </div>
           </div>
@@ -307,6 +309,5 @@ class CheckoutView extends Component {
       </React.Fragment>
     );
   }
-}
 
-export default CheckoutView;
+export default Checkout;

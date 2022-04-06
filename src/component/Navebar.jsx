@@ -1,18 +1,21 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
+
 const Navbar = () => {
     const state = useSelector((state)=> state.handleCart)
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm">
-                <div className="container">
+                <div className="container-fluid">
                     <NavLink className="navbar-brand" to="/">SHOES MARKET</NavLink>
                     <button className="navbar-toggler"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target="#navbarTogglerDemo03"
-                        aria-controls="navbarTogglerDemo03"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
                         aria-expanded="false"
                         aria-label="Toggle navigation">
 

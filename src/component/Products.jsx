@@ -15,17 +15,9 @@ const Product = ({ ProductDetail }) => {
   let Cart = (item) => {
     let LocalStorageCart = JSON.parse(localStorage.getItem("Cart")) || [];
     LocalStorageCart.push(item);
-
-    if (LocalStorageCart) {
-      setproducts((Cart) =>
-        Cart.id === products.id ? { ...LocalStorageCart, qty: LocalStorageCart.qty + 1 } : Cart
-      );
-    } else {
-      setproducts([...products, { ...Cart, qty: 1 }]);
-    }
-
-    localStorage.setItem("Cart", JSON.stringify(LocalStorageCart));
+   localStorage.setItem("Cart", JSON.stringify(LocalStorageCart));
   };
+
   useEffect(() => {
     setproducts({
       loading: false,
@@ -53,7 +45,7 @@ const Product = ({ ProductDetail }) => {
   if (products.error) {
     // content = <p>There was an error pls Refresh and try again letter...</p>;
   }
-  let TempcartId = [];
+
 
   return (
     <div>
@@ -69,20 +61,12 @@ const Product = ({ ProductDetail }) => {
       <div className="products-container">
         {products?.data &&
           products.data.map((content, key) => {
-            // if(!TempcartId.contains(content.id)){
-            //   TempcartId.push(content.id);
-            // }
-            // else{
-
-            // }
 
             return (
               <>
                 <div className=" card border mb-4 rounded overflow-hidden shedow ">
                   <img src={content.image} class="card-img-top" alt="" height="250px" />
                   <br />
-                  {content.name}
-                  {content.name}
                   {content.name}
                   <br />$ : {content.price}
                   <br />
