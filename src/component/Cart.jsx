@@ -5,7 +5,8 @@ import { ReactComponent as IconTrash } from "bootstrap-icons/icons/trash.svg";
 import { ReactComponent as IconChevronRight } from "bootstrap-icons/icons/chevron-right.svg";
 import { ReactComponent as IconChevronLeft } from "bootstrap-icons/icons/chevron-left.svg";
 import { ReactComponent as IconTruck } from "bootstrap-icons/icons/truck.svg";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
 const Cart = () => {
   // const AddToCart = JSON.parse(localStorage.getItem("Cart")) || [];
   const [AddToCartLocalStorage, setAddToCartLocalStorage] = useState([]);

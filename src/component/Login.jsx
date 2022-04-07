@@ -1,55 +1,44 @@
-import React, { useEffect, useState } from 'react';
-import {NavLink} from 'react-router-dom';
+import React, {useState} from "react"
+import "./login.css"
+import axios from "axios"
+import { useHistory } from "react-router-dom"
 
+const Login = ({ updateUser}) => {
 
-const Login = () => {
-  async function loginUser(credentials) {
-  return fetch('https://localhost:4000/api/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(credentials)
-  })
-    .then(data => data.json())
- }      
-return (
-    <div>
-      <div className="container mb-5">
-        <div className="row">
-          <div className="col-12 text-center py-4 my-4">
+    const history = useHistory()
+
+    const [ user, setUser] = useState({
+        email:"",
+        password:""
+    })
+
+    const handleChange = e => {
+        const { name, value } = e.target
+        setUser({
+            ...user,
+            [name]: value
+        })
+    }
+
+    const login = () => {
+        axios.post("http://localhost:4000/api/login", user)
+        .then(res => {
+            alert(res.data.message)
+            updateUser(res.data.user)
+            history.push("/")
+        })
+    }
+
+    return (
+        <div className="login">
             <h1>Login</h1>
-            <hr />
-
-          </div>
+            <input type="text" name="email" value={user.email} onChange={handleChange} placeholder="Enter your Email"></input>
+            <input type="password" name="password" value={user.password} onChange={handleChange}  placeholder="Enter your Password" ></input>
+            <div className="button" onClick={login}>Login</div>
+            <div>or</div>
+            <div className="button" onClick={() => history.push("/register")}>Register</div>
         </div>
-        <div className="row">
-          <div className="col-md-6">
-            <form>
-              
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                <input type="email"  class="form-control" 
-                    id="email"
-                    placeholder="Your Email" 
-                     />
-              </div>
-
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Enter Your Password"/>
-              </div>            
-              
-              <button onClick={""} class="btn btn-outline-dark">Login</button>
-              &nbsp;
-              <NavLink to="/register" class="btn btn-outline-dark">Sing Up</NavLink>
-            
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+    )
 }
 
 export default Login

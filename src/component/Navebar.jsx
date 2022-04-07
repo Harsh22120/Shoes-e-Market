@@ -6,6 +6,8 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 
 const Navbar = () => {
     const state = useSelector((state)=> state.handleCart)
+    const AddToCartLocalStorageCart = JSON.parse(localStorage.getItem("Cart")) || [];
+    
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm">
@@ -47,7 +49,7 @@ const Navbar = () => {
                                 <i className="fa fa-user-plus me-1"></i> Register</NavLink>
 
                             <NavLink to='/cart' className='btn btn-outline-dark ms-2'>
-                                <i className="fa fa-cart-plus me-1"></i> Cart ({0})
+                                <i className="fa fa-cart-plus me-1"></i> Cart ({AddToCartLocalStorageCart?.length})
                             </NavLink>
 
                         </div>

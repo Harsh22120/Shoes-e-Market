@@ -1,93 +1,56 @@
-import React, { useState} from 'react'
-// import { useHistory } from 'react-router-dom';
+import React, { useState } from "react"
+import "./register.css"
+import axios from "axios"
+import { useHistory } from "react-router-dom"
+
 const Register = () => {
-  const [firstname, setFirstname]=useState("");
-  const [lastname, setLastname]=useState("");
-  const [email,setEmail]=useState("");
-  const[password,setPassword]=useState("");
-  const[configpassword, setConfigpassword]=useState("");
 
-  // States for checking the errors
-  // const [submitted, setSubmitted] = useState(false);
-  // const [error, setError] = useState(false);
-  
-async function register(){
-    console.warn(email, password)
-    let item = {firstname, lastname, email, password, configpassword};
-    let result = await fetch("localhost:4000/api/register",
-    {
-      method: 'POST',
-      body: JSON.stringify(item),
-      headers:{
-        "Content Type": "applicaion/json",
-        "Accept": "application/json"
-      }     
-    });
-    result = await result.json();
-    localStorage.setItem("user-info",JSON.stringify(result))
-  }
-  
-  return (
-    <div>
-      <div className="container mb-5">
-        <div className="row">
-          <div className="col-12 text-center py-4 my-4">
+    const history = useHistory()
+
+    const [ user, setUser] = useState({
+        firstname: "",
+        lastname: "",
+        email:"",
+        password:"",
+        reEnterPassword: ""
+    })
+
+    const handleChange = e => {
+        const { name, value } = e.target
+        setUser({
+            ...user,
+            [name]: value
+        })
+    }
+
+    const register = () => {
+        const { firstname, lastname, email, password, reEnterPassword } = user
+        if( firstname && lastname && email && password && (password === reEnterPassword)){
+            axios.post("http://localhost:4000/api/register", user)
+            .then( res => {
+                alert(res.data.message)
+                history.push("/login")
+            })
+        } else {
+            alert("invlid input")
+        }
+        
+    }
+
+    return (
+        <div className="register">
+            {console.log("User", user)}
             <h1>Register</h1>
-            <hr />
-
-          </div>
+            <input type="text" name="firstname" value={user.firstname} placeholder="Your FirstName" onChange={ handleChange }></input>
+            <input type="text" name="lastname" value={user.lastname} placeholder="Your LastName" onChange={ handleChange }></input>
+            <input type="text" name="email" value={user.email} placeholder="Your Email" onChange={ handleChange }></input>
+            <input type="password" name="password" value={user.password} placeholder="Your Password" onChange={ handleChange }></input>
+            <input type="password" name="reEnterPassword" value={user.reEnterPassword} placeholder="Re-enter Password" onChange={ handleChange }></input>
+            <div className="button" onClick={register} >Register</div>
+            <div>or</div>
+            <div className="button" onClick={() => history.push("/login")}>Login</div>
         </div>
-        <div className="row">
-          <div className="col-md-6">
-            <form>
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">First Name</label>
-                <input type="text" value={firstname} class="form-control" 
-                    id="exampleForm1" 
-                    placeholder="Enter Your  FirstName" 
-                    onChange={(e)=>setFirstname(e.target.value)} />
-              </div>
-              
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Last Name</label>
-                <input type="text" value={lastname} class="form-control"
-                    id="exampleForm2"
-                    placeholder="Enter Your  LastName" 
-                    onChange={(e)=>setLastname(e.target.value)} />
-              </div>
-
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                <input type="email" value={email} class="form-control" 
-                    id="exampleFormControlInput1"
-                    placeholder="name@example.com" 
-                    onChange={(e)=>setEmail(e.target.value)} />
-              </div>
-             
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Password</label>
-                <input type="password" value={password} class="form-control" 
-                    id="exampleForm3" 
-                    placeholder="Enter Your Password" 
-                    onChange={(e)=>setPassword(e.target.value)} />
-              </div>
-             
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Config Password</label>
-                <input type="password" value={configpassword} class="form-control"
-                      id="exampleForm4"
-                      placeholder="Enter Your ConfigPassword" 
-                      onChange={(e)=>setConfigpassword(e.target.value)} />
-              </div>
-
-              
-              <button onClick={register} class="btn btn-outline-dark">Submit</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+    )
 }
 
 export default Register
