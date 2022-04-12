@@ -1,18 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { ReactComponent as IconEnvelope } from "bootstrap-icons/icons/envelope.svg";
 import { ReactComponent as IconTruck } from "bootstrap-icons/icons/truck.svg";
-import { ReactComponent as IconReceipt } from "bootstrap-icons/icons/receipt.svg";
 import { ReactComponent as IconCreditCard2Front } from "bootstrap-icons/icons/credit-card-2-front.svg";
 import { ReactComponent as IconCart3 } from "bootstrap-icons/icons/cart3.svg";
-import { Cart } from "react-bootstrap-icons";
-
+import useRazorpay from "react-razorpay";
 const Checkout =()=> {
   
-  // const [AddToCartLocalStorage, setAddToCartLocalStorage] = useState([]);
+  // const [AddToCartLocalStorage, setAddToCartLocalStorag0e0.] = useState([]);
 
     const AddToCartLocalStorageCart = JSON.parse(localStorage.getItem("Cart")) || [];
-    let carttotal = 0;
+    let carttotal = 0; const Razorpay = useRazorpay();
+
+    const LocalStorage = JSON.parse(localStorage.getItem("Cart"));
+    const LocalStorageuser = JSON.parse(localStorage.getItem("user"));
+    const handlePayment = useCallback(() => {
+      // const order = await createOrder(params);
+      console.log("handlepayment is called");
   
+            const options = {
+              key: "rzp_test_7IGHa5Igq6Gaka",
+              amount: carttotal  * 100,
+              currency: "INR",
+              name: "Shoes Market",
+              description: "Thank you for purchasing with ShoesMarket",
+              image: `https://media.geeksforgeeks.org/wp-content/uploads/20210806114908/dummy-200x200.png`,
+              handler: (res) => {
+                console.log(res);
+              },
+              prefill: {
+                name: LocalStorageuser?.name,
+                email: LocalStorageuser?.email,
+                contact: prompt("what is your contact no"),
+              },
+              theme: {
+                  color: "#2300a3",
+              },
+          };
+          const rzpay = new Razorpay(options);
+          rzpay.open();
+        }, [Razorpay]);
+        // const { currentUser, LocalStorageforCheckout } = state;
+    
     return (
       <React.Fragment>
         <div className="bg-secondary border-top p-4 text-white mb-3">
@@ -57,78 +85,15 @@ const Checkout =()=> {
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Name"
+                         placeholder="FirstName"
                         required
                       />
                     </div>
-                    <div className="col-md-6">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Addresss"
-                        required
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Address 2 (Optional)"
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      <select className="form-select" required>
-                        <option value>-- Country --</option>
-                        <option>India</option>
-                      </select>
-                    </div>
-                    <div className="col-md-4">
-                      <select className="form-select" required>
-                        <option value>-- State --</option>
-                        <option>Gujrat</option>
-                        <option>Pune</option>
-                        <option>Mumbai</option>
-                        <option>Delhi</option>
-                        <option>Benglur</option>
-                      </select>
-                    </div>
-                    <div className="col-md-4">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Zip"
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="card mb-3">
-                <div className="card-header">
-                  <IconReceipt className="i-va" /> Billing Infomation
-                  <div className="form-check form-check-inline ml-3">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      defaultValue
-                      id="flexCheckDefault"
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="flexCheckDefault"
-                    >
-                      Same as Shipping Infomation
-                    </label>
-                  </div>
-                </div>
-                <div className="card-body">
-                  <div className="row g-3">
                     <div className="col-md-12">
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Name"
+                        placeholder="LastName"
                         required
                       />
                     </div>
@@ -148,13 +113,15 @@ const Checkout =()=> {
                       />
                     </div>
                     <div className="col-md-4">
-                      <select className="form-select" required>
+                      <select  
+                         className="form-select" required>
                         <option value>-- Country --</option>
                         <option>India</option>
                       </select>
                     </div>
                     <div className="col-md-4">
-                      <select className="form-select" required>
+                      <select 
+                        className="form-select" required>
                         <option value>-- State --</option>
                         <option>Gujrat</option>
                         <option>Pune</option>
@@ -179,92 +146,11 @@ const Checkout =()=> {
                 <div className="card-header bg-info">
                   <IconCreditCard2Front className="i-va" /> Payment Method
                 </div>
-                <div className="card-body">
-                  <div className="row g-3 mb-3 border-bottom">
-                    <div className="col-md-6">
-                      <div className="form-check">
-                        <input
-                          id="credit"
-                          name="paymentMethod"
-                          type="radio"
-                          className="form-check-input"
-                          defaultChecked
-                          required
-                        />
-                        <label className="form-check-label" htmlFor="credit">
-                          Credit card
-                          <img
-                            src="../assets/payment/cards.webp"
-                            alt="..."
-                            className="ml-3"
-                            height={26}
-                          />
-                        </label>
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="form-check">
-                        <input
-                          id="paypal"
-                          name="paymentMethod"
-                          type="radio"
-                          className="form-check-input"
-                          required
-                        />
-                        <label className="form-check-label" htmlFor="paypal">
-                          PayPal
-                          <img
-                            src="../assets/payment/paypal_64.webp"
-                            alt="..."
-                            className="ml-3"
-                            height={26}
-                          />
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row g-3">
-                    <div className="col-md-6">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Name on card"
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <input
-                        type="number"
-                        className="form-control"
-                        placeholder="Card number"
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      <input
-                        type="number"
-                        className="form-control"
-                        placeholder="Expiration month"
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      <input
-                        type="number"
-                        className="form-control"
-                        placeholder="Expiration year"
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      <input
-                        type="number"
-                        className="form-control"
-                        placeholder="CVV"
-                      />
-                    </div>
-                  </div>
-                </div>
+
                 <div className="card-footer border-info row">
-                  <button type="button" className="btn btn-block btn-info">
-                    Pay Now <strong>${carttotal}</strong>
-                  </button>
+                  <span type="button" className="btn btn-block btn-info" onClick={ () => handlePayment()}>
+                    Pay Now 
+                  </span>
                 </div>
               </div>
             </div>

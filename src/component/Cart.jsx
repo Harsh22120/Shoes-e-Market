@@ -32,7 +32,7 @@ const Cart = () => {
 
     setAddToCartLocalStorage(cartItem);
   }, [parmid]);
-
+ 
   const removelocalstorageproduct = (parmid) => {
     const LocalStorageCart = JSON.parse(localStorage.getItem("Cart")) || [];
     var index = LocalStorageCart.map((x) => {
@@ -42,6 +42,12 @@ const Cart = () => {
     localStorage.setItem("Cart", JSON.stringify(LocalStorageCart));
     setparmid(parmid);
   };
+const increaseCount = (singleProductqty) =>{
+    // setparmid(singleProductqty.id + Math.random());
+    // LocalStorageCart = JSON.parse(localStorage.getItem("Cart")) || [];
+    // LocalStorageCart.push(item);
+    // localStorage.setItem("Cart", JSON.stringify(LocalStorageCart));
+};
 
   return (
     <div>
@@ -88,12 +94,11 @@ const Cart = () => {
                           </td>
                           <td>
                             <div className="input-group input-group-sm mw-140">
-                              <button
+                              {/* <button
                                 className="btn btn-primary text-white"
-                                onClick="decreaseCount"
-                              > - </button>
+                                onClick> - </button> */}
                               <input type="text" className="form-control" Value={Cart.qty} />
-                              <button className="btn btn-primary text-white" onClick="increaseCount"> + </button>
+                              {/* <button className="btn btn-primary text-white" onClick={()=>increaseCount()}> + </button> */}
                             </div>
                           </td>
                           <td>

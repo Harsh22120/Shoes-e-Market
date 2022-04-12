@@ -23,13 +23,13 @@ function App() {
   //   localStorage.setItem("MyUser", JSON.stringify(user))
   //   setLoginUser(user)
   // }
+  
   let content;
   const [pid, setpid] = useState(null);
   const  ProductDetail = (pid) => {
   if(pid){
     content = pid;
     setpid(pid);
-
     }
   };
 

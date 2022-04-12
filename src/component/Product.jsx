@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Axios from "axios";
 // import { useParams } from 'react-router-dom';
 
@@ -13,6 +14,12 @@ const Product = ({ productDetail }) => {
     data: null,
     error: false,
   });
+  
+  let Cart = (item) => {
+    let LocalStorageCart = JSON.parse(localStorage.getItem("Cart")) || [];
+    LocalStorageCart.push(item);
+   localStorage.setItem("Cart", JSON.stringify(LocalStorageCart));
+  };
   // console.log("printsetstate",setproduct);
   useEffect(() => {
     setproducts({
@@ -68,7 +75,10 @@ const Product = ({ productDetail }) => {
                     <hr />
                     <h3 className="my-4">${products.price}</h3>
                     <p className="lead">{products.description}</p>
-                    <button className="btn btn-outline-dark my-5">Add to Cart</button>
+                    <Link to={"/cart"} class="btn btn-outline-dark" onClick={() => Cart(products)}>
+                      Add to Cart
+                    </Link>
+                    
                   </div>
                 </div>
               </>
